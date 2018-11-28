@@ -15,6 +15,9 @@ namespace LAIGames.Gameplay
 
         CubeEffects _cubeEffects = null;
         bool _isSetToMove = false;
+        float _speed = 0.0f;
+
+        float _time = 0.0f;
 
         // Use this for initialization
         void Start()
@@ -27,6 +30,8 @@ namespace LAIGames.Gameplay
             transform.position = _pointA.position;
             StartCoroutine(WaitAndSetMove());
             StartCoroutine(DestroyAfterDuration());
+
+            _speed = Vector3.Distance(_pointA.position, _pointB.position) / _cubeEffects.AnimationDuration;
         }
 
         // Update is called once per frame
@@ -34,12 +39,13 @@ namespace LAIGames.Gameplay
         {
             if(_isSetToMove){
                 PlayAnimation();
+                ChangeShape();
             }
         }
 
         IEnumerator WaitAndSetMove()
         {
-            // suspend execution for 5 seconds
+            // start moving after AnimationDelay
             yield return new WaitForSeconds(_cubeEffects.AnimationDelay);
 
             _isSetToMove = true;
@@ -47,15 +53,19 @@ namespace LAIGames.Gameplay
 
         IEnumerator DestroyAfterDuration()
         {
-            // suspend execution for 5 seconds
-            yield return new WaitForSeconds(_cubeEffects.AnimationDuration);
+            // destroy gameobject after CubeLifetime
+            yield return new WaitForSeconds(_cubeEffects.CubeLifetime);
 
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
         void PlayAnimation(){
-            float step = _cubeEffects.AnimationDuration * Time.deltaTime;
+            float step = _speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, _pointB.position, step);
+        }
+
+        void ChangeShape(){
+            
         }
     }
 }
