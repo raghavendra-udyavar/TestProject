@@ -20,7 +20,7 @@ public class Starter : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Return)){
             SpawnCube();
 
-            _guiText.text = "COUNT: " + _cubeCount;
+            _guiText.text = "CUBECOUNT: " + _cubeCount;
         }
     }
 

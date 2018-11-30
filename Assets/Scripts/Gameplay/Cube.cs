@@ -13,11 +13,16 @@ namespace LAIGames.Gameplay
         [SerializeField]
         Transform _pointB;
 
+        [SerializeField]
+        MeshDeformer _meshDeformer;
+
         CubeEffects _cubeEffects = null;
         bool _isSetToMove = false;
         float _speed = 0.0f;
 
         float _time = 0.0f;
+
+        const float FORCE = 100f;
 
         // Use this for initialization
         void Start()
@@ -66,6 +71,7 @@ namespace LAIGames.Gameplay
 
         void ChangeShape(){
             
+            _meshDeformer.AddForceToVertex(FORCE);
         }
     }
 }
