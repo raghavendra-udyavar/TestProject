@@ -16,7 +16,7 @@ namespace LAIGames.Gameplay
         [SerializeField]
         MeshDeformer _meshDeformer;
 
-        CubeEffects _cubeEffects = null;
+        CubeEffectData _cubeEffectData = null;
         bool _isSetToMove = false;
         float _speed = 0.0f;
 
@@ -29,14 +29,14 @@ namespace LAIGames.Gameplay
         {
             // get cubeData
             string jsonString = CubeData.GetCubeData();
-            CubeDataParser cubeDataParser = new CubeDataParser();
-            _cubeEffects = cubeDataParser.Deserialize(jsonString);
-            Debug.Log(_cubeEffects.AnimationDelay + " ::" + _cubeEffects.AnimationDuration + "::" + _cubeEffects.CubeLifetime);
+            CubeEffectDataParser cubeDataParser = new CubeEffectDataParser();
+            _cubeEffectData = cubeDataParser.Deserialize(jsonString);
+            Debug.Log(_cubeEffectData.AnimationDelay + " ::" + _cubeEffectData.AnimationDuration + "::" + _cubeEffectData.CubeLifetime);
             transform.position = _pointA.position;
             StartCoroutine(WaitAndSetMove());
             StartCoroutine(DestroyAfterDuration());
 
-            _speed = Vector3.Distance(_pointA.position, _pointB.position) / _cubeEffects.AnimationDuration;
+            _speed = Vector3.Distance(_pointA.position, _pointB.position) / _cubeEffectData.AnimationDuration;
         }
 
         // Update is called once per frame
@@ -51,7 +51,7 @@ namespace LAIGames.Gameplay
         IEnumerator WaitAndSetMove()
         {
             // start moving after AnimationDelay
-            yield return new WaitForSeconds(_cubeEffects.AnimationDelay);
+            yield return new WaitForSeconds(_cubeEffectData.AnimationDelay);
 
             _isSetToMove = true;
         }
@@ -59,7 +59,7 @@ namespace LAIGames.Gameplay
         IEnumerator DestroyAfterDuration()
         {
             // destroy gameobject after CubeLifetime
-            yield return new WaitForSeconds(_cubeEffects.CubeLifetime);
+            yield return new WaitForSeconds(_cubeEffectData.CubeLifetime);
 
             Destroy(gameObject);
         }

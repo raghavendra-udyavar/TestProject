@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 
 namespace LAIGames.Gameplay
 {
     [Serializable]
-    public class CubeEffects
+    public class CubeEffectData
     {
         public float AnimationDelay;
         public float AnimationDuration;
